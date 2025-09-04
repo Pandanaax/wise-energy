@@ -1,26 +1,77 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+:root{
+  --brand-orange:  #FF9900;
+  --brand-orange-2:#FFB347;
+  --brand-blue:    #1E88E5;
+  --brand-blue-2:  #5BB1FF;
+  --brand-blue-3:  #00008B;
+  --text:          #0F172A;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+html, body { min-height: 100dvh; margin: 0; padding: 0; }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  color: var(--text);
+  background:
+    radial-gradient(820px 820px at -140px 120px,
+      rgba(255,153,0,0.28) 0 58%,
+      rgba(255,153,0,0.16) 59% 64%,
+      transparent 65%),
+
+    radial-gradient(980px 980px at calc(100% + 220px) calc(100% - 60px),
+      rgba(30,136,229,0.26) 0 56%,
+      rgba(30,136,229,0.14) 57% 64%,
+      transparent 65%),
+
+    linear-gradient(180deg, #FFFFFF 0, #FFFFFF 280px, #F6FAFF 280px);
+
+  background-repeat: no-repeat, no-repeat, no-repeat;
+
+  background-attachment: fixed, fixed, scroll;
+
+  background-color: #F6FAFF;
 }
+
+input[type="range"].slider-colored {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 6px;
+  border-radius: 9999px;
+  outline: none;
+  background: linear-gradient(to right, var(--brand-orange) 0%, var(--brand-orange) var(--value, 50%), var(--brand-blue-3) var(--value, 50%), var(--brand-blue-3) 100%);
+}
+
+input[type="range"].slider-colored::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 18px;
+  width: 18px;
+  border-radius: 50%;
+  background: var(--brand-orange);
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 0 2px rgba(0,0,0,0.3);
+}
+
+input[type="range"].slider-colored::-moz-range-thumb {
+  height: 18px;
+  width: 18px;
+  border-radius: 50%;
+  background: var(--brand-orange);
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 0 2px rgba(0,0,0,0.3);
+}
+
+.btn-amber{
+  background-image: linear-gradient(90deg, var(--brand-orange), var(--brand-orange-2));
+  color:#111827;
+}
+
+.card{ @apply rounded-2xl border border-slate-200 bg-white p-6 shadow-sm; }
+.card-title{ @apply text-xs uppercase tracking-wide text-slate-500; }
+
+.wise-header{ background: transparent; box-shadow: none; }
+
