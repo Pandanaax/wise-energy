@@ -1,86 +1,122 @@
-Wise Energy --- Solar ROI Simulator
+# Wise Energy — Solar ROI Simulator
 
-A small Next.js app to estimate the return on investment (ROI) of a
-residential solar system. Adjust a few inputs (system size, efficiency,
-prices, loan...) and see production, savings, feed-in revenue, payback
-time, and a 10-year cashflow --- updated live.
+A small Next.js app to estimate the return on investment (ROI) of a residential solar system. Adjust a few inputs (system size, efficiency, prices, loan…) and see production, savings, feed-in revenue, payback time, and a 10-year cashflow — updated live.
 
-ROI = Return on Investment --- how long it takes for the system to pay
-for itself and how much it earns over time.
+**ROI = Return on Investment** — how long it takes for the system to pay for itself and how much it earns over time.
 
-Features
+## Features
 
-Tailwind-styled UI (clean cards, sliders, charts)
+*   Tailwind-styled UI (clean cards, sliders, charts)
+*   Country selector with preset irradiance
+*   Update irradiance button (calls `/api/irradiance`)
+*   Finance panel with animated circular KPIs
+*   Recharts graphs (10-year cumulative gain & yearly net cashflow)
+*   10-year projection table
+*   Brand header with logo
 
-Country selector with preset irradiance
+## Tech stack
 
-Update irradiance button (calls /api/irradiance)
+*   Next.js 15 (App Router)
+*   React 18 + TypeScript
+*   Tailwind CSS
+*   Recharts
 
-Finance panel with animated circular KPIs
+## Project structure
 
-Recharts graphs (10-year cumulative gain & yearly net cashflow)
+```
+.
+├─ next-env.d.ts
+├─ package.json
+├─ public/
+│  └─ wise-energy-logo.png
+├─ src/
+│  ├─ app/
+│  │  ├─ api/
+│  │  │  ├─ irradiance/
+│  │  │  │  └─ route.ts
+│  │  │  └─ simulate/
+│  │  │     └─ route.ts
+│  │  ├─ favicon.ico
+│  │  ├─ globals.css
+│  │  ├─ layout.tsx
+│  │  └─ page.tsx
+│  ├─ components/
+│  │  ├─ BrandHeader.tsx
+│  │  ├─ Charts.tsx
+│  │  ├─ Controls.tsx
+│  │  ├─ FinancePanel.tsx
+│  │  ├─ ProjectionTable.tsx
+│  │  └─ ui/
+│  │     ├─ Card.tsx
+│  │     ├─ ProgressRing.tsx
+│  │     └─ Slider.tsx
+│  ├─ data/
+│  │  └─ countries.ts
+│  └─ lib/
+│     ├─ sim.ts
+│     └─ sim.test.ts
+└─ tsconfig.json
+```
 
-10-year projection table
+- - -
 
-Brand header with logo
+*   **Logo:** `public/wise-energy-logo.png`
+*   **Global styles:** `src/app/globals.css`
+*   **Simulation logic:** `src/lib/sim.ts`
 
-Tech stack
+## Getting started
 
-Next.js 15 (App Router)
+1.  **Install**
+    
+    ```bash
+    npm install
+    ```
+    
+2.  **Dev**
+    
+    ```bash
+    npm run dev
+    # open http://localhost:3000
+    ```
+    
+3.  **Production**
+    
+    ```bash
+    npm run build
+    npm start
+    ```
+    
 
-React 18 + TypeScript
+## How to use
 
-Tailwind CSS
+*   Pick a Country (irradiance is preset; you can edit it).
+*   Click _Update irradiance_ (optional) to refetch from `/api/irradiance?location=....`
+*   Move the sliders (system size, efficiency, prices, loan).
+*   Read KPIs, charts, and the 10-year table.
+*   Payback shows the estimated years to recover the investment.
 
-Recharts
+## Customize
 
-Project structure . ├─ next-env.d.ts ├─ package.json ├─ public/ │ └─
-wise-energy-logo.png ├─ src/ │ ├─ app/ │ │ ├─ api/ │ │ │ ├─ irradiance/
-│ │ │ │ └─ route.ts │ │ │ └─ simulate/ │ │ │ └─ route.ts │ │ ├─
-favicon.ico │ │ ├─ globals.css │ │ ├─ layout.tsx │ │ └─ page.tsx │ ├─
-components/ │ │ ├─ BrandHeader.tsx │ │ ├─ Charts.tsx │ │ ├─ Controls.tsx
-│ │ ├─ FinancePanel.tsx │ │ ├─ ProjectionTable.tsx │ │ └─ ui/ │ │ ├─
-Card.tsx │ │ ├─ ProgressRing.tsx │ │ └─ Slider.tsx │ ├─ data/ │ │ └─
-countries.ts │ └─ lib/ │ ├─ sim.ts │ └─ sim.test.ts └─ tsconfig.json
+*   Countries: edit `src/data/countries.ts`.
+*   Theme / CSS: edit `src/app/globals.css`.
+*   Header logo: replace `public/wise-energy-logo.png`.
 
-Logo: public/wise-energy-logo.png
+## API
 
-Global styles: src/app/globals.css
+**GET** `/api/irradiance?location=...`
 
-Simulation logic: src/lib/sim.ts
+→ returns
 
-Getting started 1) Install npm install
+```json
+{
+  "irradiance": 1100
+}
+```
 
-2)  Dev npm run dev \# open http://localhost:3000
+(stub you can wire to a real data source)
 
-3)  Production npm run build npm start
+- - -
 
-How to use
+**POST** `/api/simulate` if used
 
-Pick a Country (irradiance is preset; you can edit it).
-
-Click Update irradiance (optional) to refetch from
-/api/irradiance?location=....
-
-Move the sliders (system size, efficiency, prices, loan).
-
-Read KPIs, charts, and the 10-year table. Payback shows the estimated
-years to recover the investment.
-
-Customize
-
-Countries: edit src/data/countries.ts.
-
-Theme / CSS: edit src/app/globals.css.
-
-Header logo: replace public/wise-energy-logo.png.
-
-API
-
-GET /api/irradiance?location=... → returns
-
-{ "irradiance": 1100 }
-
-POST /api/simulate (if used) → runs the calculation server-side (see
-src/app/api/simulate/route.ts).
-
+→ runs the calculation server-side (see `src/app/api/simulate/route.ts`).
